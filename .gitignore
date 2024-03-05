@@ -1,0 +1,4 @@
+.vscode/
+# ignore compiled binaries
+*.o
+*.out
