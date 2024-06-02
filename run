@@ -1,0 +1,50 @@
+#! /bin/sh
+
+usage() {
+    echo "Usage: $0 <path-to-source-file>";
+    exit 1;
+}
+
+run_python() {
+    python3 $1;
+}
+
+run_kotlin() {
+    kotlinc $1 -include-runtime -d $filename.jar;
+    java -jar $filename.jar;
+}
+
+if [ $# -ne 1 ]; then
+    usage;
+fi
+
+if [ ! -f $1 ]; then
+    echo "Error: $1 is not a file";
+    usage;
+fi
+
+# Separate the filename from its extension
+filename=$(basename $1);
+echo "Filename: $filename";
+extension="${filename##*.}";
+echo "Extension: $extension";
+
+case $extension in
+    "c")
+        echo "C file";
+        ;;
+    "cpp")
+        echo "C++ file";
+        ;;
+    "py")
+        echo "Python file";
+        run_python $1;
+        ;;
+    "kt")
+        echo "Kotlin file";
+        run_kotlin $1;
+        ;;
+    *)
+        echo "Unknown file type";
+        ;;
+esac

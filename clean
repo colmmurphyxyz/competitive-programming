@@ -1,0 +1,5 @@
+#! /bin/sh
+# This script will recursively delete all compiled binary files in the current directory and all subdirectories
+# including .o, .out, .exe, .class, .jar, .pyc
+
+rm -rf `find . -type f -name '*.o' -o -name '*.out' -o -name '*.exe' -o -name '*.class' -o -name '*.jar' -o -name '*.pyc'`
