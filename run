@@ -5,6 +5,16 @@ usage() {
     exit 1;
 }
 
+run_c() {
+    gcc -o $filename.out $1;
+    ./$filename.out;
+}
+
+run_cpp() {
+    g++ -o $filename.out $1;
+    ./$filename.out
+}
+
 run_python() {
     python3 $1;
 }
@@ -32,9 +42,11 @@ echo "Extension: $extension";
 case $extension in
     "c")
         echo "C file";
+        run_c $1
         ;;
     "cpp")
         echo "C++ file";
+        run_cpp $1
         ;;
     "py")
         echo "Python file";
