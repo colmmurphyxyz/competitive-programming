@@ -24,6 +24,11 @@ run_kotlin() {
     java -jar $filename.jar;
 }
 
+run_haskell() {
+    # use haskell interpreter instead of compiling
+    runhaskell $1;
+}
+
 if [ $# -ne 1 ]; then
     usage;
 fi
@@ -55,6 +60,10 @@ case $extension in
     "kt")
         echo "Kotlin file";
         run_kotlin $1;
+        ;;
+    "hs")
+        echo "Haskell file";
+        run_haskell $1;
         ;;
     *)
         echo "Unknown file type";
