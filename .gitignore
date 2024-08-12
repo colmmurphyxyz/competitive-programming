@@ -1,4 +1,6 @@
 .vscode/
+.idea/
+out/
 # ignore compiled binaries
 *.o
 *.out
