@@ -40,29 +40,22 @@ fi
 
 # Separate the filename from its extension
 filename=$(basename $1);
-echo "Filename: $filename";
 extension="${filename##*.}";
-echo "Extension: $extension";
 
 case $extension in
     "c")
-        echo "C file";
         run_c $1
         ;;
     "cpp")
-        echo "C++ file";
         run_cpp $1
         ;;
     "py")
-        echo "Python file";
         run_python $1;
         ;;
     "kt")
-        echo "Kotlin file";
         run_kotlin $1;
         ;;
     "hs")
-        echo "Haskell file";
         run_haskell $1;
         ;;
     *)
