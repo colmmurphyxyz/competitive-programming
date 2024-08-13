@@ -1,7 +1,7 @@
 module Main (main) where
 
-import P003(largestPrimeFactor)
+import P007
 
 main :: IO ()
 main = do
-    print $ largestPrimeFactor 600851475143
+    print p007
