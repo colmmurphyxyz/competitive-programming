@@ -1,3 +1,5 @@
+module P004(largestPalindromeProductInRange, p004) where
+
 import Prelude
 
 reverseInt :: Integer -> Integer
@@ -8,10 +10,10 @@ isPalindrome n = n == reverseInt n
 
 -- Pair an element with every member of the input list
 pairElement:: a -> [a] -> [] (a,a)
-pairElement elem list =
+pairElement element list =
     case list of
         [] -> []
-        x:xs -> (elem, x) : pairElement elem xs
+        x:xs -> (element, x) : pairElement element xs
 
 -- Make all possible pairs of elements in a given list
 makePairs :: [] a -> [] (a, a)
@@ -26,6 +28,9 @@ makePairsInts = makePairs
 tupleProduct :: (Integer, Integer) -> Integer
 tupleProduct (a, b) = a * b
 
-main :: IO ()
-main = do
-    print $ maximum . filter isPalindrome $ map tupleProduct (makePairsInts [100 .. 999])
+largestPalindromeProductInRange :: Integer -> Integer -> Integer
+largestPalindromeProductInRange a b =
+    maximum . filter isPalindrome $ map tupleProduct (makePairsInts [a .. b])
+
+p004 :: Integer
+p004 = largestPalindromeProductInRange 100 999

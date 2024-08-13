@@ -1,7 +1,6 @@
-import Prelude
+module P006(sumOfNats, sumOfSquares, p006) where
 
-nats :: [Integer]
-nats = 1 : map (1+) nats
+import Prelude
 
 -- Returns the sum of the first n Natural Numbers
 sumOfNats :: Integral a => a -> a
@@ -17,11 +16,9 @@ sumOfSquares n = sum $ take n squares
 square :: Num a => a -> a
 square a = a * a
 
-main :: IO ()
-main = do
+p006 :: Integer
+p006 = do
     let sumOf100NatsSquared = square $ sumOfNats 100
     let sumOf100Squares = sumOfSquares 100
     let difference = sumOf100NatsSquared - sumOf100Squares
-    print sumOf100NatsSquared
-    print sumOf100Squares
-    print difference
+    difference
