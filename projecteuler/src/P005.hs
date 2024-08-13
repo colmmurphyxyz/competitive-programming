@@ -1,6 +1,7 @@
 module P005(divisibleByAll, firstDivisibleByAll, p005) where
 
 import Prelude
+import Utils(multiples)
 
 divisibleBy :: Integral a => a -> a -> Bool
 divisibleBy n k = k `mod` n == 0
@@ -18,9 +19,6 @@ firstDivisibleByAll divisors candidates =
         maxDivisorMultiples = multiples maxDivisor
     in
     head $ filter (divisibleByAll divisors) (filter (`elem` maxDivisorMultiples) candidates)
-
-multiples :: (Num a, Enum a) => a -> [a]
-multiples n = map (*n) [1..]
 
 p005 :: Integer
 p005 = firstDivisibleByAll [11..19] (multiples 20)

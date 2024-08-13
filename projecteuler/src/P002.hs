@@ -1,10 +1,11 @@
 module P002(sumOfEvenFibonacciNumbers, p002) where
 
 import Prelude
+import Utils(fibonaccis)
 
+-- This problem takes the fibonacci sequence as 1, 2, 3, 5, 8, 13, ...
 fib :: [Integer]
-fib = 1 : nxt
-    where nxt = 2 : zipWith (+) fib nxt
+fib = tail . tail $ fibonaccis
 
 evenFib :: [Integer]
 evenFib = filter even fib
