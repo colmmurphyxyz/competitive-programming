@@ -33,6 +33,7 @@ library
       P006
       P007
       P008
+      P010
       Utils
   other-modules:
       Paths_projecteuler
