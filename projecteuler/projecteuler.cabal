@@ -32,6 +32,7 @@ library
       P005
       P006
       P007
+      P008
       Utils
   other-modules:
       Paths_projecteuler
