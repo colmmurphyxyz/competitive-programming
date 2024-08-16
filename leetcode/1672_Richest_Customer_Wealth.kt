@@ -1,9 +1,7 @@
-import kotlin.collections.maxByOrNull
-
-// accounts and accounts[i] is guaranteed to never be empty
-// thus maxByOrNull will always return a non-null value
 fun maximumWealth(accounts: Array<IntArray>): Int =
-    accounts.maxByOrNull(IntArray::sum)!!.sum()
+    accounts
+        .map(IntArray::sum)
+        .max()
 
 fun main() {
     println(maximumWealth(
