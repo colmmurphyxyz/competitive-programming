@@ -34,6 +34,7 @@ library
       P007
       P008
       P010
+      P012
       Utils
   other-modules:
       Paths_projecteuler

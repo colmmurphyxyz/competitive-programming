@@ -1,7 +1,7 @@
 module Main (main) where
 
-import P007
+import P012
 
 main :: IO ()
 main = do
-    print p007
+    print p012
