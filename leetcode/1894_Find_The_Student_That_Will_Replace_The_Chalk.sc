@@ -1,15 +1,13 @@
+import scala.annotation.tailrec
+
 object Solution {
   def chalkReplacer(chalk: Array[Int], k: Int): Int = {
-    var piecesChalk: Int = k
-    var idx: Int = 0
-    while(true) {
-      if (chalk(idx) > piecesChalk) {
-        return idx
-      }
-      piecesChalk -= chalk(idx)
-      idx = (idx + 1) % chalk.length
-    }
-    return 0 // unreachable
+    @tailrec
+    def loop(idx: Int, piecesChalk: Int): Int =
+      if (chalk(idx) > piecesChalk) idx
+      else loop((idx + 1) % chalk.length, piecesChalk - chalk(idx))
+
+    loop(0, k)
   }
 }
 
