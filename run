@@ -29,6 +29,11 @@ run_haskell() {
     runhaskell $1;
 }
 
+run_scala() {
+    # use scala interpreter instead of compiling
+    scala $1;
+}
+
 if [ $# -ne 1 ]; then
     usage;
 fi
@@ -57,6 +62,9 @@ case $extension in
         ;;
     "hs")
         run_haskell $1;
+        ;;
+    "sc")
+        run_scala $1;
         ;;
     *)
         echo "Unknown file type";
