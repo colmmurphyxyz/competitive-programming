@@ -14,22 +14,17 @@ object Solution {
       return head  
     }
 
-    var fast: ListNode = head
-    var slow: ListNode = head
-
-    while (true) {
-      fast = fast.next.next
-      if (fast == null) {
+    @scala.annotation.tailrec
+    def helper(head: ListNode, fast: ListNode, slow: ListNode): ListNode = {
+      val fastNew: ListNode = fast.next.next
+      if (fastNew == null || fastNew.next == null) {
         slow.next = slow.next.next
         return head
       }
-      if (fast.next == null) {
-        slow.next = slow.next.next
-        return head
-      }
-      slow = slow.next
+      return helper(head, fastNew, slow.next)
     }
-    slow.next = slow.next.next
-    head
+
+    return helper(head, head, head)
   }
 }
+
