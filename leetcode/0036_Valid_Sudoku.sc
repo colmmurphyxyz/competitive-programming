@@ -91,13 +91,6 @@ def boardFromString(s: String): Array[Array[Char]] =
         .split("\n")
         .map(_.toCharArray())
 
-def printMatrix[T](matrix: Array[Array[T]]): Unit =
-    matrix.foreach(row =>
-        print("[ ")
-        row.foreach(value => print(value.toString + " "))
-        print("]\n")
-    )
-
 println(Solution.isValidSudoku(boardFromString(validBoardString))) // true
 println(Solution.isValidSudoku(boardFromString(invalidBoardString))) // false
 println(Solution.isValidSudoku(boardFromString(boardString))) // false
