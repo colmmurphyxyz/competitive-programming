@@ -1,83 +1,23 @@
-class MaxHeap:
-    def __init__(self, elems: list[list[int]]):
-        self._heap: list[tuple[int]] = list(map(
-            lambda c: (self.key(c), c[0], c[1]),
-            elems
-        ))
-        for i in range(len(self._heap)):
-            self._bubble_up(i)
-
-    def items(self) -> list[tuple[int]]:
-        return list(map(lambda x: (x[1], x[2]), self._heap))
-
-    def insert(self, item: tuple[int]):
-        key = self.key(item)
-        self._heap.append((key, item[0], item[1]))
-        self._bubble_up(len(self._heap) - 1)
-
-    def peek(self) -> tuple[int]:
-        _, passes, total = self._heap[0]
-        return (passes, total)
-
-    def update_max(self, new_value: tuple[int]):
-        key = self.key(new_value)
-        self._heap[0] = (key, new_value[0], new_value[1])
-        self._bubble_down(0)
-
-    def key(self, item) -> float:
-        if item is None:
-            return -1
-        if isinstance(item, int):
-            return self._heap[item][0]
-        elif isinstance(item, (tuple, list)):
-            p, t = item[0], item[1]
-            return (t - p) / (t * (t + 1))
-        else:
-            print("Bad parameter to key()")
-
-    def _bubble_up(self, idx: int):
-        if idx == 0:
-            return
-        parent_idx: int = self._parent(idx)
-        if self.key(parent_idx) < self.key(idx):
-            self._heap[parent_idx], self._heap[idx] = self._heap[idx], self._heap[parent_idx]
-            self._bubble_up(parent_idx)
-
-    def _bubble_down(self, idx: int):
-        left_idx: int = None if self._left(idx) >= len(self._heap) else self._left(idx)
-        right_idx: int = None if self._right(idx) >= len(self._heap) else self._right(idx)
-        if left_idx is None and right_idx is None:
-            return
-        max_idx = max(left_idx, right_idx, key=self.key)
-        if self.key(max_idx) < self.key(idx):
-            return
-        self._heap[idx], self._heap[max_idx] = self._heap[max_idx], self._heap[idx]
-        self._bubble_down(max_idx)
-
-    def _parent(self, idx: int) -> int:
-        return (idx - 1) // 2
-    
-    def _left(self, idx: int) -> int:
-        return (2 * idx) + 1
-    
-    def _right(self, idx: int) -> int:
-        return (2 * idx) + 2
+import heapq
 
 class Solution:
-    def _average_pass_ratio(self, classes: list[list[int]]) -> float:
-        pass_rates = list(map(lambda c: c[0] / c[1], classes))
-        return sum(pass_rates) / len(pass_rates)
+
+    def key(self, passes: int, total: int) -> float:
+        return (total - passes) / (total * (total + 1))
 
     def maxAverageRatio(self, classes, extraStudents: int) -> float:
-        max_heap: MaxHeap = MaxHeap(classes)
-        # for c in classes:
-        #     max_heap.insert((c[0], c[1]))
+        max_heap = []
+        for (passes, total) in classes:
+            key: float = self.key(passes, total)
+            heapq.heappush(max_heap, (-key, passes, total))
 
         for _ in range(extraStudents):
-            passes, total = max_heap.peek()
-            max_heap.update_max((passes + 1, total + 1))
+            (oldkey, passes, total) = heapq.heappop(max_heap)
+            newkey: float = self.key(passes + 1, total + 1)
+            heapq.heappush(max_heap, (-newkey, passes + 1, total + 1))
 
-        return self._average_pass_ratio(max_heap.items())
+        ratios = list(map(lambda n: n[1] / n[2], max_heap))
+        return sum(ratios) / len(ratios)
     
 if __name__ == "__main__":
     s = Solution()
