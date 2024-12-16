@@ -1,14 +1,14 @@
+import heapq
+
 class Solution:
-    
+
     def getFinalState(self, nums: list[int], k: int, multiplier: int) -> list[int]:
+        heap = list(zip(nums, range(len(nums))))
+        heapq.heapify(heap)
         for _ in range(k):
-            smallest_num: int = nums[0]
-            smallest_idx: int = 0
-            for i in range(len(nums)):
-                if nums[i] < smallest_num:
-                    smallest_num = nums[i]
-                    smallest_idx = i
-            nums[smallest_idx] = smallest_num * multiplier
+            _, i = heapq.heappop(heap)
+            nums[i] *= multiplier
+            heapq.heappush(heap, (nums[i], i))
         return nums
     
 if __name__ == "__main__":
