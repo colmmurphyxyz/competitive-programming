@@ -9,15 +9,12 @@ class Solution {
             sum += nums[i];
             sums[i] = sum;
         }
-        sum = 0;
-        for (int i = n - 1; i > 0; i--) {
-            sum += nums[i];
-            revSums[i] = sum;
-        }
+
+        long threshold = (long) Math.ceil(sum / 2.0);
 
         int numSplits = 0;
         for (int i = 0; i < n - 1; i++) {
-            if (sums[i] >= revSums[i + 1]) {
+            if (sums[i] >= threshold) {
                 numSplits++;
             }
         }
@@ -26,7 +23,7 @@ class Solution {
 
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.waysToSplit(new int[] {10, 4, -8, 7}));
-        System.out.println(s.waysToSplit(new int[] {2, 3, 1, 0}));
+        System.out.println(s.waysToSplitArray(new int[] {10, 4, -8, 7}));
+        System.out.println(s.waysToSplitArray(new int[] {2, 3, 1, 0}));
     }
 }
