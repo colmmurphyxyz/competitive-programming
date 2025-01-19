@@ -34,6 +34,12 @@ run_scala() {
     scala $1;
 }
 
+run_java() {
+    javac $1
+    cd $(dirname $1);
+    java $filename;
+}
+
 if [ $# -ne 1 ]; then
     usage;
 fi
@@ -65,6 +71,9 @@ case $extension in
         ;;
     "sc")
         run_scala $1;
+        ;;
+    "java")
+        run_java $1;
         ;;
     *)
         echo "Unknown file type";
