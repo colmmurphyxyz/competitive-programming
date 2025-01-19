@@ -9,3 +9,4 @@ out/
 META-INF
 *.hi
 *.kexe
+__pycache__/
