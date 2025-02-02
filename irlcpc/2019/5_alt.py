@@ -52,6 +52,7 @@ def dfs(start, target):
         # positions that are closer to target will be placed at top of stack
         next_moves = sorted(next_moves, key=lambda p: -p[1])
         for m, _ in next_moves:
+            visited.add(tuple(m))
             stack.append((m, moves + 1))
     return -1
 
