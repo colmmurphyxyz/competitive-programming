@@ -1,25 +1,24 @@
 from functools import reduce
 
 class PtNode:
-    def __init__(self, type: str, children: list):
+    def __init__(self, type: str, children: list = None):
         self.type = type
-        self.children = children
+        self.children = [] if children is None else children
 
     def visit(self) -> bool:
         if self.type == "f":
             return False
         if self.type == "t":
             return True
-        c = list(map(lambda child: child.visit(), self.children))
+        # evaluate children
+        operands = list(map(lambda child: child.visit(), self.children))
         if self.type == "or":
-            return reduce(lambda lhs, rhs: lhs or rhs, c)
+            return reduce(lambda lhs, rhs: lhs or rhs, operands)
         if self.type == "and":
-            return reduce(lambda lhs, rhs: lhs and rhs, c)
+            return reduce(lambda lhs, rhs: lhs and rhs, operands)
         if self.type == "not":
-            # assume NOT expr has exactly one child
-            if len(c) != 1:
-                print("NOT expr should have exactly one child", c)
-            return not c[0]
+            # NOT expr will have exactly one child
+            return not operands[0]
         print("Reached the unreachable")
 
 class Solution:
@@ -27,10 +26,10 @@ class Solution:
         root, _ = self.parse_expr(expression, 0)
         return root.visit()
 
-    def parse_expr(self, expression: str, i: int):
+    def parse_expr(self, expression: str, i: int) -> tuple[PtNode, int]:
         match expression[i]:
-            case "f": return PtNode("f", []), i + 1
-            case "t": return PtNode("t", []), i + 1
+            case "f": return PtNode("f"), i + 1
+            case "t": return PtNode("t"), i + 1
             case "!": type = "not"
             case "|": type = "or"
             case "&": type = "and"
@@ -43,8 +42,6 @@ class Solution:
                 child, next_idx = self.parse_expr(expression, i)
                 node.children.append(child)
                 i = next_idx + 1
-            elif expression[i] == "(":
-                print("Shouldnt be here")
             elif expression[i] == ",":
                 i += 1
             elif expression[i] == "t":
@@ -53,7 +50,7 @@ class Solution:
             elif expression[i] == "f":
                 node.children.append(PtNode("f", []))
                 i += 1
-        return node, len(expression)
+        return node, -1
 
 
 
@@ -63,22 +60,3 @@ if __name__ == "__main__":
     print(s.parseBoolExpr("|(f,f,f,t)"))
     print(s.parseBoolExpr("!(&(f,t))"))
     print(s.parseBoolExpr("!(&(&(!(&(f)),&(t),|(f,f,t)),&(t),&(t,t,f)))"))
-"""
-"!(
-    &(
-        &(
-            !(
-                &(f)
-            ),
-            &(t),
-            |(
-                f,f,t
-            )
-        ),
-        &(t),
-        &(
-            t,t,f
-        )
-    )
-)"
-"""
