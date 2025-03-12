@@ -15,6 +15,11 @@ run_cpp() {
     ./$filename.out
 }
 
+run_rust() {
+  rustc -o solution.o $1;
+  ./solution.o
+}
+
 run_python() {
     python3 $1;
 }
@@ -59,6 +64,9 @@ case $extension in
         ;;
     "cpp")
         run_cpp $1
+        ;;
+    "rs")
+        run_rust $1
         ;;
     "py")
         run_python $1;
