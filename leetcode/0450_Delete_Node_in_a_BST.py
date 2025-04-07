@@ -9,8 +9,7 @@ class TreeNode:
 class Solution:
 
     def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
-        candidate = self.searchBST(root, key)
-        if candidate is None:
+        if root is None:
             return root
         if key < root.val:
             root.left = self.deleteNode(root.left, key)
