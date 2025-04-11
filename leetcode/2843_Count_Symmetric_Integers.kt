@@ -6,7 +6,6 @@ fun isSymmetric(x: Int): Boolean {
     val rhs = s.drop(n / 2)
     val leftSum = lhs.foldRight(0) { digit, acc -> acc + digit.digitToInt() }
     val rightSum = rhs.foldRight(0) { digit, acc -> acc + digit.digitToInt() }
-    // println("$x: leftSum=$leftSum, rightSum=$rightSum")
     return leftSum == rightSum
 }
 
